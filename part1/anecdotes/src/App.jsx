@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
 const App = () => {
-  const [selected, setSelected] = useState(0);
-
   const anecdotes = [
     {
       id: 1,
@@ -36,6 +34,9 @@ const App = () => {
     },
   ]
 
+  const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState (new Array(anecdotes.length).fill(0));
+
   const getRandomNumber = () => {
     if (anecdotes.length <= 1) return;
 
@@ -46,6 +47,14 @@ const App = () => {
     setSelected(randomNumber);
   }
 
+  const markAsVoted = () => {
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
+  }
+
+
+
   return (
     <>
       <p>{anecdotes[selected].text}</p>
@@ -53,7 +62,9 @@ const App = () => {
       <i>{anecdotes[selected].author}</i>
       <br />
       <br />
+      <button onClick={markAsVoted}>vote</button>
       <button onClick={getRandomNumber}>next anecdote</button>
+      <p>This anecdote was voted {votes[selected]} times.</p>
     </>
   )
 }
