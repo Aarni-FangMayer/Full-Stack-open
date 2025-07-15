@@ -52,11 +52,19 @@ const App = () => {
     copy[selected] += 1;
     setVotes(copy);
   }
-
+  let maxNum = 0;
+  let indexNum = 0;
+  for (let i=0; i < votes.length; i++){
+    if(votes[i] > maxNum){
+          indexNum = i;
+          maxNum = votes[i];
+    }
+  }
 
 
   return (
     <>
+      <h1>Anecdote of day</h1>
       <p>{anecdotes[selected].text}</p>
       -
       <i>{anecdotes[selected].author}</i>
@@ -65,6 +73,11 @@ const App = () => {
       <button onClick={markAsVoted}>vote</button>
       <button onClick={getRandomNumber}>next anecdote</button>
       <p>This anecdote was voted {votes[selected]} times.</p>
+      <br />
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[indexNum].text}</p>
+      -
+      <i>{anecdotes[indexNum].author}</i>
     </>
   )
 }
