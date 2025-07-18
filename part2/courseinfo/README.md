@@ -1,12 +1,30 @@
-# React + Vite
+# Task: Course Information
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This React application renders a list of courses and their parts, including the total number of exercises per course. It supports any number of courses and parts dynamically.
 
-Currently, two official plugins are available:
+## Features
+- Displays multiple courses with their corresponding parts
+- Calculates and displays total exercises per course
+- Uses `Array.prototype.reduce()` for total calculation
+- Components are modular and organized in a separate file (`Courses.jsx`)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies
+- React
+- JavaScript
+- Vite
 
-## Expanding the ESLint configuration
+## Project Structure
+- `App.jsx` — Contains the main app component and the courses data.
+- `components/Courses.jsx` — Exports the `Courses` component. It maps through all courses and renders a `Course` component for each.
+  - `Course` contains subcomponents:
+    - `Header` — Renders the course name.
+    - `Content` — Renders a list of `Part` components.
+    - `Total` — Calculates and displays the total number of exercises.
+    - `Part` — Displays individual part name and exercise count.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
