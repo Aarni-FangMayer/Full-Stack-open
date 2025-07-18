@@ -7,18 +7,30 @@ const App = () => {
   const [newName, setNewName] = useState('')
 
   const addName = (event) => {
-    event.preventDefault();
-    console.log('Button submit clicked', event.target);
+    event.preventDefault()
+    console.log('Button submit clicked', event.target)
+
     const nameObject = {
       name: newName
-    };
+    }
+
+    const nameExist = persons.some(person => person.name === newName);
+    if(nameExist){
+      alert(`${newName} is already added to phonebook`);
+      setNewName('');
+      return;
+    }
+
     setPersons(persons.concat(nameObject));
+    setNewName('');
   }
 
   const handleNameChange = (event) => {
     console.log(event.target.value);
     setNewName(event.target.value);
   }
+
+  
 
   return (
     <div>
