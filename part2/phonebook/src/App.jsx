@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
@@ -6,14 +7,20 @@ import Persons from './components/Persons'
 const App = () => {
 
   /*all states*/
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567'},
-    { name: 'Bob Dylan', number: '060-1234567'},
-    { name: 'Axl Rose', number: '070-1234567'},
-  ]); 
+  const [persons, setPersons] = useState([]); 
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchName, setSearchName] = useState('');
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+
+  }, [])
+
 
   /*adding a new name in the list*/
   const addName = (event) => {

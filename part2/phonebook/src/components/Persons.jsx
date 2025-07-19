@@ -1,7 +1,7 @@
 const Persons = ({filtered}) => {
     return (
         <>
-            {filtered.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
+            {filtered.map(person => <p key={person.id}>{person.name} {person.number}</p>)}
         </>
     )
 }
