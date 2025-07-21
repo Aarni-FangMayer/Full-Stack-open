@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "040-123456",
+      "number": "040 654 23 21",
       "id": "1"
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "name": "Dan Abramov",
-      "number": "12-43-234345",
+      "number": "16 654 45 25",
       "id": "3"
     },
     {

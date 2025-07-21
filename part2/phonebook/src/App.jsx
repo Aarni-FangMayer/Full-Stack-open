@@ -21,12 +21,22 @@ const App = () => {
   /*adding a new name in the list*/
   const addName = (event) => {
     event.preventDefault()
-    
-    if(persons.some(person => person.name === newName)){
-      alert(`${newName} is already added to phonebook`);
-      setNewName('');
-      setNewNumber('');
-      return;
+    const existentPerson = persons.find(person => person.name === newName)
+
+    if(existentPerson){
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        const updatedNumber = {...existentPerson, number: newNumber}
+        personService.update(existentPerson.id, updatedNumber)
+          .then(updatedPerson => {
+            setPersons(persons.map(person => 
+              person.id !== existentPerson.id ? person : updatedPerson
+            ))
+            setNewName('');
+            setNewNumber('');
+          })
+          .catch(error => console.log('Error while editing number', error))
+      }
+    return    
     }
 
     const personObject = {
@@ -58,8 +68,8 @@ const App = () => {
 
   /*name filter*/
   const filteredPersons = persons.filter(person =>
-    person.name.toLowerCase().includes(searchName.toLowerCase())
-  );
+    person?.name?.toLowerCase().includes(searchName.toLowerCase())
+  )
 
   return (
     <>
