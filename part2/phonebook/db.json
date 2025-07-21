@@ -29,6 +29,21 @@
       "id": "1ead",
       "name": "Jimi Hendrix",
       "number": "040 652 45 12"
+    },
+    {
+      "id": "6574",
+      "name": "Jimmy Page",
+      "number": "050 654 25 14"
+    },
+    {
+      "id": "e5df",
+      "name": "Tony Iommi",
+      "number": "040 654 21 25"
+    },
+    {
+      "id": "d445",
+      "name": "Riley B. King",
+      "number": "060 456 12 32"
     }
   ]
 }

@@ -3,18 +3,22 @@ import personService from './services/persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
+import NotificationDelete from './components/NotificationDelete'
 
 const App = () => {
 
   /*all states*/
-  const [persons, setPersons] = useState([]); 
-  const [newName, setNewName] = useState('');
-  const [newNumber, setNewNumber] = useState('');
-  const [searchName, setSearchName] = useState('');
+  const [persons, setPersons] = useState([]) 
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [searchName, setSearchName] = useState('')
+  const [notification, setNotification] = useState(null)
+  const [notificationDelete, setNotificationDelete] = useState(null)
 
   useEffect(() => {
     personService.getAll().then(setPersons)
-    .catch(error => console.error('GET error:', error));
+    .catch(error => console.error('GET error:', error))
   }, [])
 
 
@@ -43,9 +47,11 @@ const App = () => {
       name: newName,
       number: newNumber,
     }
-    personService.create(personObject).then(person =>
-        setPersons(persons.concat(person))
-    )
+    personService.create(personObject).then(person =>{
+        setPersons(persons.concat(person));
+        setNotification(`Contact ${personObject.name} has sucsessfully added to the phonebook!`);
+        setTimeout(() => setNotification(null), 5200)
+    })
     setNewName('');
     setNewNumber('');
   }
@@ -58,7 +64,9 @@ const App = () => {
     if (window.confirm(`Delete ${name}?`)){
       personService.deletePerson(id)
         .then(() => {
-          setPersons(persons.filter(person => person.id !== id))
+          setPersons(persons.filter(person => person.id !== id));
+          setNotificationDelete(`Contact has been deleted`);
+          setTimeout(() => setNotificationDelete(null),5200)
         })
         .catch(error => {
           console.log('Delete failed:', error)
@@ -78,9 +86,11 @@ const App = () => {
       
       <h2>Add a new</h2>
       <PersonForm onSubmit={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
+      <Notification message={notification} />
 
       <h2>Numbers</h2>
       <Persons filtered={filteredPersons} onDelete={handlePersonDelete}/>
+      <NotificationDelete message={notificationDelete} />
     </>
   )
 }
