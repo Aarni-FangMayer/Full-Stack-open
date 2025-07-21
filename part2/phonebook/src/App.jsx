@@ -14,6 +14,7 @@ const App = () => {
 
   useEffect(() => {
     personService.getAll().then(setPersons)
+    .catch(error => console.error('GET error:', error));
   }, [])
 
 
@@ -43,6 +44,17 @@ const App = () => {
   const handleNameChange = (event) => {setNewName(event.target.value)}
   const handleNumberChange = (event) => {setNewNumber(event.target.value)}
   const handleSearchName = (event) => {setSearchName(event.target.value)}
+  const handlePersonDelete = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)){
+      personService.deletePerson(id)
+        .then(() => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+        .catch(error => {
+          console.log('Delete failed:', error)
+        })
+    }
+  }
 
   /*name filter*/
   const filteredPersons = persons.filter(person =>
@@ -58,7 +70,7 @@ const App = () => {
       <PersonForm onSubmit={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
 
       <h2>Numbers</h2>
-      <Persons filtered={filteredPersons} />
+      <Persons filtered={filteredPersons} onDelete={handlePersonDelete}/>
     </>
   )
 }
