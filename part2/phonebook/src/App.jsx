@@ -38,7 +38,12 @@ const App = () => {
             setNewName('');
             setNewNumber('');
           })
-          .catch(error => console.log('Error while editing number', error))
+          .catch(error => {
+            console.log('Error while editing number', error)
+            setNotificationDelete(`Information of ${newName} has already been removed from server`)
+            setTimeout(() => setNotificationDelete(null), 5200)
+            setPersons(persons.filter(person => person.id !== existentPerson.id))
+          })
       }
     return    
     }
