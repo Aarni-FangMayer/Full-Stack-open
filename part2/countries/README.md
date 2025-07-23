@@ -1,12 +1,52 @@
-# React + Vite
+# Task: Data for countries
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based application to explore data about countries around the world, including weather information for each country's capital.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search countries by name with live filtering
+- Display list of matching countries
+- Show detailed information about a selected country:
+  - Capital, population, area
+  - Official languages
+  - National flag
+  - Сurrent weather in the capital city
+    - Temperature
+    - Wind speed
+    - Weather icon
 
-## Expanding the ESLint configuration
+## Technologies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- Axios
+- REST Countries API (https://restcountries.com/)
+- Open-Meteo API (https://open-meteo.com/)
+
+## Project Structure
+
+- `components/` — Contains UI components of the application.
+  - `CountryInfo.jsx` — Contains general information about the selected country.
+  - `CountryList.jsx` — Displays the list of countries
+  - `SearchForm.jsx` — Contains searching form
+  - `Weather.jsx` — Gets weather information from the server and displays it in the application.
+- `App.jsx` — Contains the main app component and the courses data.
+- `main.jsx` — Entry point of the application. Renders the `App` component.
+
+## Getting Started
+
+0. **Before starting, navigate to the directory:**
+    ```bash
+   cd part2/countries
+   ```
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Start**
+    ```
+   npm run dev
+   ```
+The app was developed following the step-by-step progression of Part 2 of Full Stack Open 2025.

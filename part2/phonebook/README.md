@@ -31,6 +31,7 @@ A simple phonebook built with **React** for the frontend and **JSON Server** as 
 - `main.jsx` — Entry point of the application. Renders the `App` component.
 
 ## Getting Started
+
 0. **Before starting, navigate to the directory:**
     ```bash
    cd part2/phonebook
