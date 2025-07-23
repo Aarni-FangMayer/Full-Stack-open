@@ -26,6 +26,8 @@ function App() {
     setValue(event.target.value)
   }
 
+
+
   const filteredCountries = allCountries.filter(country => 
     country.name.common.toLowerCase().includes(value.toLocaleLowerCase())
   )
@@ -35,7 +37,7 @@ function App() {
       {filteredCountries.length > 10 
         ? (<p>Too many matches, specify another filter</p>) 
         : filteredCountries.length === 1 ? (
-          <CountryInfo filteredCountries={filteredCountries} />
+          <CountryInfo filteredCountries={filteredCountries[0]} />
         )
         : (
           <CountryList filteredCountries={filteredCountries} />
