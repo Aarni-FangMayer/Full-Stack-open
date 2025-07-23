@@ -25,6 +25,7 @@ This React application renders a list of courses and their parts, including the 
 ## Getting Started
 
 ```bash
+cd part2/courseinfo
 npm install
 npm run dev
 ```

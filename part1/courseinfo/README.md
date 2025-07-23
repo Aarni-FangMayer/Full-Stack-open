@@ -16,5 +16,6 @@ This app displays information about a course and its parts. It demonstrates the 
 ## Getting Started
 
 ```bash
+cd part1/courseinfo
 npm install
 npm start

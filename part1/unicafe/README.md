@@ -15,5 +15,6 @@ This is a simple feedback app allowing users to rate food and service as "good",
 ## Getting Started
 
 ```bash
+cd part1/unicafe
 npm install
 npm start

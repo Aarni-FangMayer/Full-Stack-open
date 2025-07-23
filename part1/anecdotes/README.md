@@ -17,6 +17,7 @@ A small React app for displaying and voting on programming-related anecdotes. It
 ## Getting Started
 
 ```bash
+cd part1/anecdotes
 npm install
 npm start
 ```
