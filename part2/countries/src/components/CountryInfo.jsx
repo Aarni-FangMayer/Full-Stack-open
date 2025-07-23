@@ -1,3 +1,5 @@
+import Weather from "./Weather"
+
 const CountryInfo = ({ filteredCountries }) => {
     return (
         <>
@@ -13,6 +15,8 @@ const CountryInfo = ({ filteredCountries }) => {
             </ul>
             <br />
             <img src={filteredCountries.flags.png} alt="country flag" style={{border: 'solid 2px black'}}/>
+            <br />
+            <Weather selectedCountry={filteredCountries}/>
         </>
     )
 }
