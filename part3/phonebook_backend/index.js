@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
     { 
       "id": "1",
@@ -24,12 +26,56 @@ let persons = [
     }
 ]
 
-app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>')
+app.get('/info', (request, response) => {
+    const personsCount = persons.length
+    const currentTime = new Date()
+
+    response.send(`<p>Phonebook has info for ${personsCount} people</p><p>${currentTime}</p>`)
 })
 
 app.get('/api/persons', (request, response) => {
   response.json(persons)
+})
+
+app.get('/api/persons/:id', (request, response) => {
+  const id = request.params.id
+  const person = persons.find(person => person.id === id)
+  if(person) {
+    response.json(person)
+  } else {
+    response.status(404).end()
+  }
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+    const id = request.params.id
+    persons = persons.filter(person => person.id !== id)
+
+    response.status(204).end()
+})
+
+const createId = () => {
+    return Math.floor(Math.random() * 999)
+}
+
+app.post('/api/persons/', (request, response) => {
+    const person = request.body
+    person.id = createId()
+
+    if(!person.name || !person.number) {
+        console.log("Please provide your name and phone number.")
+        return response.status(400).json({ error: 'name or number missing' })
+    }
+
+    const existsPerson = persons.find(p => p.name === person.name)
+    if(existsPerson){
+        console.log("This name is already registered.")
+        return response.status(400).json({ error: 'Name must be uniqe' })
+    }
+    
+    persons = persons.concat(person)
+
+    response.json(person)
 })
 
 const PORT = 3001
