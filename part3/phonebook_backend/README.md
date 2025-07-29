@@ -56,6 +56,11 @@ Deployment:
    ```bash
     Copy-Item -Recurse -Force dist ../part3/phonebook-backend/
    ```
+   or
+   ```bash
+    cd ../../part3/phonebook_backend
+    npm run build:ui
+   ```
 
 3. **Run backend**
    ```bash
