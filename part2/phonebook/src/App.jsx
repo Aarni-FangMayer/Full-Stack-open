@@ -30,6 +30,7 @@ const App = () => {
     if(existentPerson){
       if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
         const updatedNumber = {...existentPerson, number: newNumber}
+        console.log("existentPerson", existentPerson.id, updatedNumber)
         personService.update(existentPerson.id, updatedNumber)
           .then(updatedPerson => {
             setPersons(persons.map(person => 
