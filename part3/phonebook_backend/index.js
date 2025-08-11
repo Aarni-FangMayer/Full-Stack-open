@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(express.static('dist'))
 
-morgan.token('type', function(req, res){ return req.headers['content-type'] })
+morgan.token('type', function(req){ return req.headers['content-type'] })
 
 morgan.token('body', (req) => {
   if(req.method === 'POST' && req.body){
@@ -16,8 +16,6 @@ morgan.token('body', (req) => {
   } return ''
 })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
-
-let persons = []
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
@@ -55,7 +53,7 @@ app.get('/api/persons', (request, response, next) => {
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then(person => {
-    if(person) response.json(person)
+      if(person) response.json(person)
       else response.status(404).end()
     })
     .catch(next)
@@ -70,13 +68,13 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 app.post('/api/persons/', (request, response, next) => {
-  const {name, number} = request.body
-  const person = new Person({name, number})
+  const { name, number } = request.body
+  const person = new Person({ name, number })
 
   Person.findOne({ name })
     .then(existsPerson => {
       if(existsPerson){
-        console.log("This name is already registered.")
+        console.log('This name is already registered.')
         return response.status(400).json({ error: 'Name must be uniqe' })
       }
       return person.save()
@@ -94,7 +92,7 @@ app.put('/api/persons/:id', (request, response, next) => {
   const id = request.params.id
 
   if(!number){
-    console.log("Please provide your phone number.")
+    console.log('Please provide your phone number.')
     return response.status(400).json({ error: 'number missing' })
   }
   const update = {
