@@ -73,20 +73,20 @@ app.post('/api/persons/', (request, response, next) => {
   const {name, number} = request.body
   const person = new Person({name, number})
 
-  if(!person.name || !person.number){
-    console.log("Please provide your name and phone number.")
-    return response.status(400).json({ error: 'name or number missing' })
-  }
-
   Person.findOne({ name })
     .then(existsPerson => {
       if(existsPerson){
-      console.log("This name is already registered.")
-      return response.status(400).json({ error: 'Name must be uniqe' })
-    }
-    person.save().then(newPerson => response.json(newPerson))
+        console.log("This name is already registered.")
+        return response.status(400).json({ error: 'Name must be uniqe' })
+      }
+      return person.save()
     })
-    .catch(next)
+    .then(savedPerson => {
+      if(savedPerson){
+        response.json(savedPerson)
+      }
+    })
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {

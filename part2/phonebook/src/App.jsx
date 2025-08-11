@@ -21,6 +21,10 @@ const App = () => {
     .catch(error => console.error('GET error:', error))
   }, [])
 
+  useEffect(()=>{
+    console.log('notificationDelete', notificationDelete)
+  }, [notificationDelete])
+
 
   /*adding a new name in the list*/
   const addName = (event) => {
@@ -53,13 +57,21 @@ const App = () => {
       name: newName,
       number: newNumber,
     }
-    personService.create(personObject).then(person =>{
+    personService
+      .create(personObject)
+      .then(person =>{
+        console.log('person', person)
         setPersons(persons.concat(person));
         setNotification(`Contact ${personObject.name} has sucsessfully added to the phonebook!`);
         setTimeout(() => setNotification(null), 5200)
+        setNewName('');
+        setNewNumber('');
     })
-    setNewName('');
-    setNewNumber('');
+      .catch(error => {
+        console.log('ERROR ',error.response.data.error)
+        setNotificationDelete(`Error: ${error.response?.data?.error}`);
+        setTimeout(() => setNotificationDelete(null), 5200);
+      })
   }
 
   /*event handlers*/
@@ -93,10 +105,11 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm onSubmit={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
       <Notification message={notification} />
+      <NotificationDelete message={notificationDelete} />
 
       <h2>Numbers</h2>
       <Persons filtered={filteredPersons} onDelete={handlePersonDelete}/>
-      <NotificationDelete message={notificationDelete} />
+      
     </>
   )
 }
