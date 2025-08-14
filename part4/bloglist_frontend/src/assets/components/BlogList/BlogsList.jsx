@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 
 import BlogInfo from "./BlogInfo";
-import "./blogsList.css"
+import "./blogsList.css";
 
-const BlogsList = ({ blogs }) => {
+const BlogsList = ({ blogs, addLike }) => {
   return (
     <div className="blogsList">
       <ul>
@@ -11,11 +12,13 @@ const BlogsList = ({ blogs }) => {
           return (
             <li key={blog.id}>
               <BlogInfo
+                id={blog.id}
                 author={blog.author}
                 name={blog.name}
                 url={blog.url}
                 reviews={blog.reviews}
                 likes={blog.likes}
+                addLike={addLike}
               />
             </li>
           );

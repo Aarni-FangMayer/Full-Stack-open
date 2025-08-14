@@ -1,14 +1,15 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import "./blogInfo.css"
+import "./blogInfo.css";
 
-const BlogInfo = ({ author, name, url, reviews, likes }) => {
+const BlogInfo = ({ id, author, name, url, reviews, likes, addLike }) => {
   return (
     <div className="blogInfo">
       <h3>Author: {author} </h3>
       <p>Title: {name} </p>
-      <a>{url}</a>
+      <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
       <p>Reviews: {reviews}</p>
-      <button>Likes count {likes}</button>
+      <button onClick={() => addLike(id)}>Likes count {likes}</button>
     </div>
   );
 };
