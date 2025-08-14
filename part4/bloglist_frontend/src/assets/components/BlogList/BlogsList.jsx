@@ -1,10 +1,11 @@
 import React from "react";
 
 import BlogInfo from "./BlogInfo";
+import "./blogsList.css"
 
 const BlogsList = ({ blogs }) => {
   return (
-    <>
+    <div className="blogsList">
       <ul>
         {blogs.map((blog) => {
           return (
@@ -20,7 +21,7 @@ const BlogsList = ({ blogs }) => {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 };
 

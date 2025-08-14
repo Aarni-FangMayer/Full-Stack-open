@@ -1,5 +1,6 @@
 import React from "react";
 import BlogsList from "./BlogsList";
+import "./blogSection.css";
 
 const BlogSection = () => {
   const blogs = [
@@ -10,10 +11,10 @@ const BlogSection = () => {
   ];
 
   return (
-    <>
+    <div className="blogSection">
       <h2>List of favourite blogs</h2>
       <BlogsList blogs={blogs} />
-    </>
+    </div>
   );
 };
 
