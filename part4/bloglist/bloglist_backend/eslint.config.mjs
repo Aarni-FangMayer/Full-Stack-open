@@ -18,7 +18,7 @@ export default defineConfig([
     rules: {
       "@stylistic/indent": ["error", 2],
       "@stylistic/linebreak-style": ["error", "unix"],
-      "@stylistic/quotes": ["error", "single"],
+      "@stylistic/quotes": ["error", "double"],
       "@stylistic/semi": ["error", "never"],
       eqeqeq: "error",
       "no-trailing-spaces": "error",
