@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/blogs"
+const baseURL = "http://localhost:3001/api/blogs"
 
 const getAll = () => {
-    return axios.get(baseURL)
+    const request = axios.get(baseURL)
+    return request.then(response => response.data)
 }
 
 const create = newBlog => {

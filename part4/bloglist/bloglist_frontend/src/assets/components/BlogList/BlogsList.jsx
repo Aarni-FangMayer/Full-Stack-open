@@ -5,6 +5,9 @@ import BlogInfo from "./BlogInfo";
 import "./blogsList.css";
 
 const BlogsList = ({ blogs, addLike }) => {
+  if (!blogs || blogs.length === 0) {
+    return <p>Блоги не найдены...</p>
+  }
   return (
     <div className="blogsList">
       <ul>

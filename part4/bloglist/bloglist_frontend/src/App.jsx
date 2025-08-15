@@ -17,9 +17,9 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log("effect works");
-    blogService.getAll().then((response) => {
-      setBlogs(response.data);
+    blogService.getAll().then((data) => {
+      console.log("Полученные данные: ", data);
+      setBlogs(data);
     });
   }, []);
 
