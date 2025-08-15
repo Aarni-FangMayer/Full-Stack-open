@@ -56,10 +56,6 @@ const unknownEndpoint = (request, response) => {
 
 app.use(requestLogger)
 
-app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>')
-})
-
 app.get('/api/blogs', (request, response) => {
   response.json(blogs)
 })
