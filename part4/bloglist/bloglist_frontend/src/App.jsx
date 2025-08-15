@@ -27,6 +27,12 @@ const App = () => {
     event.preventDefault();
 
     const defaultReviews = Math.floor(Math.random() * 11);
+
+    if (!formData.author && !formData.name && !formData.url) {
+      alert("All field need to be filled");
+      return;
+    }
+
     const newBlog = {
       author: formData.author,
       name: formData.name,
