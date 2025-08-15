@@ -14,11 +14,11 @@ mongoose.connect(url)
   })
 
 const noteSchema = new mongoose.Schema({
-  author: String,
-  name: String,
-  url: String,
-  reviews: String,
-  likes: String,
+  author: { type: String, required: true },
+  name: { type: String, required: true },
+  url: { type: String, required: true },
+  reviews: Number,
+  likes: Number,
 })
 
 noteSchema.set("toJSON", {
