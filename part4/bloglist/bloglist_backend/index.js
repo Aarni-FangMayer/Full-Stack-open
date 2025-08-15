@@ -7,41 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(express.static("dist"));
 
-// let blogs = [
-//   {
-//     id: "1",
-//     author: "Billboard",
-//     name: "WorldWide News",
-//     url: "https://www.billboard.com/",
-//     reviews: 5,
-//     likes: 5,
-//   },
-//   {
-//     id: "2",
-//     author: "Business Insider",
-//     name: "Economics Articles",
-//     url: "https://www.businessinsider.com/",
-//     reviews: 3,
-//     likes: 4,
-//   },
-//   {
-//     id: "3",
-//     author: "TMZ",
-//     name: "Podcasts, interviews, videos",
-//     url: "https://www.tmz.com/",
-//     reviews: 0,
-//     likes: 4,
-//   },
-//   {
-//     id: "4",
-//     author: "Yahoo! Sports",
-//     name: "Sport News",
-//     url: "https://sports.yahoo.com/",
-//     reviews: 10,
-//     likes: 3,
-//   },
-// ];
-
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
   console.log("Path:  ", request.path);
@@ -142,7 +107,7 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: "malformatted id" });
   }
 
-  response.status(500).json({ error: 'Something went wrong' })
+  response.status(500).json({ error: "Something went wrong" });
 };
 
 app.use(unknownEndpoint);
