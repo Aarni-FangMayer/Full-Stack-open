@@ -96,12 +96,6 @@ app.put("/api/blogs/:id", (request, response) => {
   response.json(updatedBlog);
 });
 
-const path = require("path");
-
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "dist", "index.html"));
-});
-
 app.use(unknownEndpoint);
 
 const PORT = 3001;
