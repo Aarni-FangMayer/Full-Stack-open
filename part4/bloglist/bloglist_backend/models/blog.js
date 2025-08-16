@@ -1,17 +1,5 @@
-// const mongoose = require("mongoose") /* extract to app.js */
+const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-
-// const url = process.env.MONGODB_URI /* extract to app.js */
-
-// console.log("connecting to", url) /* extract to app.js */
-
-// mongoose.connect(url) /* extract to app.js */
-//   .then(() => {
-//     console.log("connected to MongoDB")
-//   })
-//   .catch(error => {
-//     console.log("error connecting to MongoDB:", error.message)
-//   })
 
 const noteSchema = new mongoose.Schema({
   author: { type: String, required: true },
