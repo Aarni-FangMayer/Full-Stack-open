@@ -25,24 +25,27 @@ blogsRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-blogsRouter.post("/", (request, response) => {
-  const body = request.body;
+blogsRouter.post("/", async (request, response, next) => {
+  try {
+    const body = request.body;
 
-  if (!body) {
-    return response.status(400).json({ error: "content missing" });
+    if (!body || !body.name || !body.url) {
+      return response.status(400).json({ error: "name or url missing" });
+    }
+
+    const blog = new Blog({
+      author: body.author,
+      name: body.name,
+      url: body.url,
+      reviews: body.reviews || 0,
+      likes: body.likes
+    });
+
+    const savedBlog = await blog.save();
+    response.status(201).json(savedBlog);
+  } catch (error) {
+    next(error);
   }
-
-  const blog = new Blog({
-    author: body.author,
-    name: body.name,
-    url: body.url,
-    reviews: Math.floor(Math.random() * 11),
-    likes: 0,
-  });
-
-  blog.save().then((savedBlog) => {
-    response.json(savedBlog);
-  });
 });
 
 blogsRouter.put("/:id", (request, response, next) => {
