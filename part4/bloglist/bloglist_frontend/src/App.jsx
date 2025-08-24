@@ -62,6 +62,14 @@ const App = () => {
     });
   };
 
+  const handleDeleteBlog = (id) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      blogService.deleteBlog(id).then(() => {
+        setBlogs(blogs.filter((blog) => blog.id !== id));
+      });
+    }
+  };
+
   return (
     <>
       <h1 style={{ textAlign: "center" }}>Welcome to The Blog List Project</h1>
@@ -71,7 +79,7 @@ const App = () => {
         setFormData={setFormData}
       />
       <br />
-      <BlogSection blogs={blogs} addLike={handleAddLike} />
+      <BlogSection blogs={blogs} addLike={handleAddLike} deleteBlog={handleDeleteBlog}/>
     </>
   );
 };

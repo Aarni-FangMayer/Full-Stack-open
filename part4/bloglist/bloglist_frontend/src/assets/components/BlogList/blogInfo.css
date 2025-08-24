@@ -18,3 +18,8 @@
     cursor: pointer;
     color: #526c85;
 }
+
+#deleteButton {
+    margin-left: 10px;
+    background-color: #f28b82;
+}

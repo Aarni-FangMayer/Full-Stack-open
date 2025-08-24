@@ -4,7 +4,7 @@ import React from "react";
 import BlogInfo from "./BlogInfo";
 import "./blogsList.css";
 
-const BlogsList = ({ blogs, addLike }) => {
+const BlogsList = ({ blogs, addLike, deleteBlog }) => {
   if (!blogs || blogs.length === 0) {
     return <p>Loading information about saved blogs...</p>
   }
@@ -22,6 +22,7 @@ const BlogsList = ({ blogs, addLike }) => {
                 reviews={blog.reviews}
                 likes={blog.likes}
                 addLike={addLike}
+                deleteBlog={deleteBlog}
               />
             </li>
           );
