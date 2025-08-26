@@ -1,8 +1,10 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
+const User = require("../models/user");
 
 blogsRouter.get("/", (request, response, next) => {
   Blog.find({})
+    .populate("user", { username: 1, name: 1 })
     .then((blogs) => {
       if (blogs && blogs.length > 0) {
         response.json(blogs);
@@ -15,6 +17,7 @@ blogsRouter.get("/", (request, response, next) => {
 
 blogsRouter.get("/:id", (request, response, next) => {
   Blog.findById(request.params.id)
+    .populate("user", { username: 1, name: 1 })
     .then((blog) => {
       if (blog) {
         response.json(blog);
@@ -33,15 +36,31 @@ blogsRouter.post("/", async (request, response, next) => {
       return response.status(400).json({ error: "name or url missing" });
     }
 
+    const user = await User.findById(body.userId);
+    if (!user) {
+      return response
+        .status(400)
+        .json({ error: "userId missing or not valid" });
+    }
+
     const blog = new Blog({
       author: body.author,
       name: body.name,
       url: body.url,
       reviews: body.reviews || 0,
-      likes: body.likes
+      likes: body.likes,
+      user: user._id,
     });
 
     const savedBlog = await blog.save();
+
+    // const populatedBlog = await Blog.findById(savedBlog._id).populate("user", {
+    //   username: 1,
+    //   name: 1,
+    // });
+    user.blogs = user.blogs.concat(savedBlog._id);
+    await user.save();
+
     response.status(201).json(savedBlog);
   } catch (error) {
     next(error);
@@ -56,6 +75,7 @@ blogsRouter.put("/:id", (request, response, next) => {
     { likes },
     { new: true, runValidators: true, context: "query" }
   )
+    .populate("user", { username: 1, name: 1 })
     .then((updatedBlog) => {
       if (updatedBlog) {
         response.json(updatedBlog);
