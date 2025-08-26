@@ -8,6 +8,10 @@ const bcrypt = require("bcrypt");
 
 const api = supertest(app);
 
+if (process.env.NODE_ENV !== "test") {
+  throw new Error("Tests must run on the test database!");
+}
+
 beforeEach(async () => {
   await User.deleteMany({});
 
