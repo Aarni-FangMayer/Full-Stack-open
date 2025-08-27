@@ -4,8 +4,16 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
 const Blog = require("../models/blog");
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 const api = supertest(app);
+
+if (process.env.NODE_ENV !== "test") {
+  throw new Error(
+    "Tests must run with NODE_ENV=test! Otherwise you risk modifying the main database."
+  );
+}
 
 const initialBlogs = [
   {
@@ -24,20 +32,30 @@ const initialBlogs = [
   },
 ];
 
+let token;
+
 beforeEach(async () => {
   await Blog.deleteMany({});
-  await Blog.insertMany(initialBlogs);
-});
+  await User.deleteMany({});
 
-/*
-TEST REQUEST WITH PROMISE
-*/
-// test("all blogs are returned", () => {
-//   api.get("/api/blogs").then((response) => {
-//     assert.strictEqual(response.statusCode, 200);
-//     assert.strictEqual(response.body.length, 2);
-//   });
-// });
+  const passwordHash = await bcrypt.hash("password123", 10);
+  const user = new User({
+    username: "existinguser",
+    name: "Existing User",
+    passwordHash,
+  });
+  await user.save();
+
+  const loginResponse = await api
+    .post("/api/login")
+    .send({ username: "existinguser", password: "password123" });
+
+  token = loginResponse.body.token;
+
+  await Blog.insertMany(
+    initialBlogs.map((blog) => ({ ...blog, user: user._id }))
+  );
+});
 
 test("all blogs are returned", async () => {
   const response = await api.get("/api/blogs").expect(200);
@@ -68,11 +86,12 @@ test("a valid blog can be added", async () => {
     name: "Test blog name 3",
     url: "http://test-3.com",
     reviews: 5,
-    likes: 0
+    likes: 0,
   };
 
   await api
     .post("/api/blogs")
+    .set("Authorization", `Bearer ${token}`)
     .send(newBlog)
     .expect(201)
     .expect("Content-Type", /application\/json/);
@@ -84,35 +103,30 @@ test("a valid blog can be added", async () => {
   assert(names.includes("Test blog name 3"));
 });
 
-// test("if likes are missing, it is 0 by default", async () => {
-//   const newBlog = {
-//     author: "JJ.",
-//     name: "Test blog name 4",
-//     url: "http://test-4.com",
-//     reviews: 3,
-//   };
-
-//   const response = await api
-//     .post("/api/blogs")
-//     .send(newBlog)
-//     .expect(201)
-//     .expect("Content-Type", /application\/json/);
-
-//   assert.strictEqual(response.body.likes, 0);
-// });
-
-test("blog without title(name) is not added", async () => {
+test("adding a blog fails with 401 if token is not provided", async () => {
   const newBlog = {
-    author: "Madina Fiat",
-    url: "http://test-5.com",
-    reviews: 3,
+    author: "Unauthorized User",
+    name: "Blog Without Token",
+    url: "http://unauth.com",
+    reviews: 1,
     likes: 0
   };
 
   await api
     .post("/api/blogs")
     .send(newBlog)
-    .expect(400);
+    .expect(401);
+});
+
+test("blog without title(name) is not added", async () => {
+  const newBlog = {
+    author: "Madina Fiat",
+    url: "http://test-5.com",
+    reviews: 3,
+    likes: 0,
+  };
+
+  await api.post("/api/blogs").set("Authorization", `Bearer ${token}`).send(newBlog).expect(400);
 });
 
 test("blog without url is not added", async () => {
@@ -120,22 +134,17 @@ test("blog without url is not added", async () => {
     author: "Pekka Suomalainen",
     name: "Test blog name 6",
     reviews: 5,
-    likes: 0
+    likes: 0,
   };
 
-  await api
-    .post("/api/blogs")
-    .send(newBlog)
-    .expect(400);
+  await api.post("/api/blogs").set("Authorization", `Bearer ${token}`).send(newBlog).expect(400);
 });
 
 test("a blog can be deleted", async () => {
   const blogsAtStart = await api.get("/api/blogs");
   const blogToDelete = blogsAtStart.body[0];
 
-  await api
-    .delete(`/api/blogs/${blogToDelete.id}`)
-    .expect(204);
+  await api.delete(`/api/blogs/${blogToDelete.id}`).set("Authorization", `Bearer ${token}`).expect(204);
 
   const blogsAtEnd = await api.get("/api/blogs");
 
