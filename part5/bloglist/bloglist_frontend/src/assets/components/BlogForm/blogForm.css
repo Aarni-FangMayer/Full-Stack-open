@@ -1,0 +1,21 @@
+.formSection form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formSection input {
+    margin-bottom: 20px;
+}
+
+.formSection button {
+    width: 250px;
+    background-color: #97c6f1;
+    padding: 5px;
+    border: solid 1px rgb(70, 70, 70);
+    border-radius: 5px;
+}
+
+.formSection button:hover {
+    background-color: #526c85;
+    cursor: pointer;
+}

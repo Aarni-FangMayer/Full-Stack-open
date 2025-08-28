@@ -1,0 +1,25 @@
+.blogInfo button {
+    background-color: #97c6f1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.blogInfo button:hover {
+    background-color: #526c85;
+    cursor: pointer;
+}
+
+.blogInfo a {
+    text-decoration: solid;
+    color: #6a8dad;
+}
+
+.blogInfo a:hover {
+    cursor: pointer;
+    color: #526c85;
+}
+
+#deleteButton {
+    margin-left: 10px;
+    background-color: #f28b82;
+}
