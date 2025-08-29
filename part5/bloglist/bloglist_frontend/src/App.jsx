@@ -114,6 +114,14 @@ const App = () => {
   const personalBlogs = () => (
     <>
       <h2>Hi, {user.name} welcome to your personal blogs page!</h2>
+      <button
+        onClick={() => {
+          window.localStorage.clear();
+          setUser(null);
+        }}
+      >
+        Log out
+      </button>
       <BlogForm
         addBlog={addBlog}
         formData={formData}
