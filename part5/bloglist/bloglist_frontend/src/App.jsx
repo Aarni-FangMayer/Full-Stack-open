@@ -6,18 +6,10 @@ import BlogSection from "./assets/components/BlogList/BlogSection";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./assets/components/Notification";
+import Togglable from "./assets/components/Togglable";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-
-  const [formData, setFormData] = useState({
-    id: "",
-    author: "",
-    name: "",
-    url: "",
-    reviews: "",
-    likes: "",
-  });
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -68,34 +60,11 @@ const App = () => {
     }
   };
 
-  const addBlog = (event) => {
-    event.preventDefault();
-
-    const defaultReviews = Math.floor(Math.random() * 11);
-
-    if (!formData.author && !formData.name && !formData.url) {
-      alert("All field need to be filled");
-      return;
-    }
-
-    const newBlog = {
-      author: formData.author,
-      name: formData.name,
-      url: formData.url,
-      reviews: defaultReviews,
-      likes: 0,
-    };
+  const addBlog = (newBlog) => {
     blogService
       .create(newBlog)
       .then((addedBlog) => {
         setBlogs([...blogs, addedBlog]);
-        setFormData({
-          author: "",
-          name: "",
-          url: "",
-          reviews: "",
-          likes: "",
-        });
         showNotification(
           `A new blog "${addedBlog.name}" by ${addedBlog.author} added successfully`,
           "success"
@@ -161,30 +130,31 @@ const App = () => {
     />
   );
 
-  const personalBlogs = () => (
-    <>
-      <h2>Hi, {user.name} welcome to your personal blogs page!</h2>
-      <button
-        onClick={() => {
-          window.localStorage.clear();
-          setUser(null);
-          showNotification("Logged out successfully", "warning");
-        }}
-      >
-        Log out
-      </button>
-      <BlogForm
-        addBlog={addBlog}
-        formData={formData}
-        setFormData={setFormData}
-      />
-      <BlogSection
-        blogs={blogs}
-        addLike={handleAddLike}
-        deleteBlog={handleDeleteBlog}
-      />
-    </>
-  );
+  const personalBlogs = () => {
+    return (
+      <>
+        <h2>Hi, {user.name} welcome to your personal blogs page!</h2>
+        <button
+          onClick={() => {
+            window.localStorage.clear();
+            setUser(null);
+            showNotification("Logged out successfully", "warning");
+          }}
+        >
+          Log out
+        </button>
+
+        <Togglable buttonLabel="Create new blog">
+          <BlogForm addBlog={addBlog} showNotification={showNotification} />
+        </Togglable>
+        <BlogSection
+          blogs={blogs}
+          addLike={handleAddLike}
+          deleteBlog={handleDeleteBlog}
+        />
+      </>
+    );
+  };
 
   return (
     <>
