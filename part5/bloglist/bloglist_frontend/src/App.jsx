@@ -130,11 +130,23 @@ const App = () => {
     />
   );
 
+  const logoutButtonStyle = {
+    backgroundColor: "#7a7f83ff",
+    padding: "5px",
+    borderRadius: "5px",
+    border: "1px solid black",
+    color: "black",
+    display: "inline-block",
+    marginLeft: "20px",
+    cursor: "pointer"
+  };
+
   const personalBlogs = () => {
     return (
       <>
-        <h2>Hi, {user.name} welcome to your personal blogs page!</h2>
+        <h2 style={{display: "inline-block"}}>Hi, {user.name} welcome to your personal blogs page!</h2>
         <button
+        style={logoutButtonStyle}
           onClick={() => {
             window.localStorage.clear();
             setUser(null);

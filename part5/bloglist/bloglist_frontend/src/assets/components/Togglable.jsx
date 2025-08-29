@@ -10,14 +10,35 @@ const Togglable = ({ buttonLabel, children }) => {
 
   const toggleVisibility = () => setVisible(!visible);
 
+  const buttonStyle = {
+    width: "250px",
+    backgroundColor: "#97c6f1",
+    padding: "5px",
+    borderRadius: "5px",
+    border: "1px solid black",
+    color: "black",
+    marginTop: "10px",
+    cursor: "pointer"
+  };
+
+  const buttonStyleRed = {
+    width: "250px",
+    backgroundColor: "#f1979cff",
+    padding: "5px",
+    borderRadius: "5px",
+    border: "1px solid black",
+    color: "black",
+    marginTop: "10px",
+    cursor: "pointer"
+  };
   return (
     <>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{buttonLabel}</button>
+        <button style={buttonStyle} onClick={toggleVisibility}>{buttonLabel}</button>
       </div>
       <div style={showWhenVisible}>
         {children}
-        <button onClick={toggleVisibility}>cancel</button>
+        <button style={buttonStyleRed} onClick={toggleVisibility}>cancel</button>
       </div>
     </>
   );

@@ -1,4 +1,13 @@
+.titleHide {
+    text-align: center;
+}
+
+.blogInfo {
+    min-width: 220px;
+}
+
 .blogInfo button {
+    width: 47%;
     background-color: #97c6f1;
     padding: 5px;
     border-radius: 5px;
@@ -22,4 +31,35 @@
 #deleteButton {
     margin-left: 10px;
     background-color: #f28b82;
+}
+
+#deleteButton:hover {
+    background-color: #74433f;
+}
+
+#hideInfoButton {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    background-color: #cedeec;
+}
+
+#hideInfoButton:hover {
+    background-color: #526c85;
+}
+
+#showMoreButton {
+    width: 100%;
+    background-color: #97c6f1;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid black 1px;
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+#showMoreButton:hover {
+    background-color: #526c85;
+    cursor: pointer;
 }
