@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 
+import LoginForm from "./assets/components/LoginForm/LoginForm";
 import BlogForm from "./assets/components/BlogForm/BlogForm";
 import BlogSection from "./assets/components/BlogList/BlogSection";
 import blogService from "./services/blogs";
+import loginService from "./services/login";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -16,12 +18,30 @@ const App = () => {
     likes: "",
   });
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     blogService.getAll().then((data) => {
       console.log("Полученные данные: ", data);
       setBlogs(data);
     });
   }, []);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const user = await loginService.login({ username, password });
+      blogService.setToken(user.token)
+      setUser(user);
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      console.error("full error:", error);
+    }
+  };
 
   const addBlog = (event) => {
     event.preventDefault();
@@ -70,16 +90,37 @@ const App = () => {
     }
   };
 
-  return (
+  const loginForm = () => (
+    <LoginForm
+      handleLogin={handleLogin}
+      username={username}
+      setUsername={setUsername}
+      password={password}
+      setPassword={setPassword}
+    />
+  );
+
+  const personalBlogs = () => (
     <>
-      <h1 style={{ textAlign: "center" }}>Welcome to The Blog List Project</h1>
+      <h2>Hi, {user.name} welcome to your personal blogs page!</h2>
       <BlogForm
         addBlog={addBlog}
         formData={formData}
         setFormData={setFormData}
       />
-      <br />
-      <BlogSection blogs={blogs} addLike={handleAddLike} deleteBlog={handleDeleteBlog}/>
+      <BlogSection
+        blogs={blogs}
+        addLike={handleAddLike}
+        deleteBlog={handleDeleteBlog}
+      />
+    </>
+  );
+
+  return (
+    <>
+      <h1 style={{ textAlign: "center" }}>Welcome to The Blog List Project</h1>
+      {!user && loginForm()}
+      {user && personalBlogs()}
     </>
   );
 };
