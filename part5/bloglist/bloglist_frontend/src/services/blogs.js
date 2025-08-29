@@ -22,8 +22,13 @@ const addLike = (id, updatedBlog) => {
   return axios.put(`${baseURL}/${id}`, updatedBlog);
 };
 
-const deleteBlog = (id) => {
-  return axios.delete(`${baseURL}/${id}`);
+const deleteBlog = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.delete(`${baseURL}/${id}`, config);
+  return response.data;
 };
 
 export default {
