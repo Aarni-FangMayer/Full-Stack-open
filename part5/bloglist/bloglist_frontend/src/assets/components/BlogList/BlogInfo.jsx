@@ -9,7 +9,7 @@ const BlogInfo = ({ id, author, name, url, reviews, likes, addLike, deleteBlog }
     return (
       <div className="blogInfo">
         <h3 className="titleHide">{name}</h3>
-        <butto id="showMoreButton" onClick={() => setShowMoreInfo(true)}>Show more info</butto>
+        <button id="showMoreButton" onClick={() => setShowMoreInfo(true)}>Show more info</button>
       </div>
     )
   };
