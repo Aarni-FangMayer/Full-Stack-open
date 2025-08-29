@@ -5,6 +5,7 @@ import BlogForm from "./assets/components/BlogForm/BlogForm";
 import BlogSection from "./assets/components/BlogList/BlogSection";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import Notification from "./assets/components/Notification";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -21,6 +22,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [notification, setNotification] = useState({ message: "", type: "" });
 
   useEffect(() => {
     blogService.getAll().then((data) => {
@@ -38,6 +40,13 @@ const App = () => {
     }
   }, []);
 
+  const showNotification = (message, type = "success", duration = 5000) => {
+    setNotification({ message, type });
+    setTimeout(() => {
+      setNotification({ message: "", type: "" });
+    }, duration);
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -49,8 +58,13 @@ const App = () => {
       setUser(user);
       setUsername("");
       setPassword("");
+      showNotification(`Welcome ${user.name}!`, "success");
     } catch (error) {
       console.error("full error:", error);
+      showNotification(
+        `Failed login: ${error.response?.data?.error || error.message}`,
+        "error"
+      );
     }
   };
 
@@ -71,16 +85,29 @@ const App = () => {
       reviews: defaultReviews,
       likes: 0,
     };
-    blogService.create(newBlog).then((addedBlog) => {
-      setBlogs([...blogs, addedBlog]);
-      setFormData({
-        author: "",
-        name: "",
-        url: "",
-        reviews: "",
-        likes: "",
+    blogService
+      .create(newBlog)
+      .then((addedBlog) => {
+        setBlogs([...blogs, addedBlog]);
+        setFormData({
+          author: "",
+          name: "",
+          url: "",
+          reviews: "",
+          likes: "",
+        });
+        showNotification(
+          `A new blog "${addedBlog.name}" by ${addedBlog.author} added successfully`,
+          "success"
+        );
+      })
+      .catch((error) => {
+        console.error("Failed to add blog:", error);
+        showNotification(
+          `Failed to add blog: ${error.response?.data?.error || error.message}`,
+          "error"
+        );
       });
-    });
   };
 
   const handleAddLike = (id) => {
@@ -108,9 +135,19 @@ const App = () => {
     try {
       await blogService.deleteBlog(id);
       setBlogs(blogs.filter((blog) => blog.id !== id));
+      showNotification(
+        `Blog "${blogToDelete.name}" deleted successfully`,
+        "warning"
+      );
     } catch (error) {
       console.error("Failed to delete blog:", error);
       alert(`Failed to delete blog "${blogToDelete.name}". Please try again.`);
+      showNotification(
+        `Failed to delete blog "${blogToDelete.name}": ${
+          error.response?.data?.error || error.message
+        }`,
+        "error"
+      );
     }
   };
 
@@ -131,6 +168,7 @@ const App = () => {
         onClick={() => {
           window.localStorage.clear();
           setUser(null);
+          showNotification("Logged out successfully", "warning");
         }}
       >
         Log out
@@ -151,6 +189,7 @@ const App = () => {
   return (
     <>
       <h1 style={{ textAlign: "center" }}>Welcome to The Blog List Project</h1>
+      <Notification message={notification.message} type={notification.type} />
       {!user && loginForm()}
       {user && personalBlogs()}
     </>
