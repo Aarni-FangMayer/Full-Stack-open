@@ -71,8 +71,8 @@ const App = () => {
       reviews: defaultReviews,
       likes: 0,
     };
-    blogService.create(newBlog).then((response) => {
-      setBlogs([...blogs, response.data]);
+    blogService.create(newBlog).then((addedBlog) => {
+      setBlogs([...blogs, addedBlog]);
       setFormData({
         author: "",
         name: "",
