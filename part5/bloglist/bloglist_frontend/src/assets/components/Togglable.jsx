@@ -18,7 +18,8 @@ const Togglable = ({ buttonLabel, children }) => {
     border: "1px solid black",
     color: "black",
     marginTop: "10px",
-    cursor: "pointer"
+    cursor: "pointer",
+    marginLeft: "40px",
   };
 
   const buttonStyleRed = {
@@ -29,7 +30,8 @@ const Togglable = ({ buttonLabel, children }) => {
     border: "1px solid black",
     color: "black",
     marginTop: "10px",
-    cursor: "pointer"
+    cursor: "pointer",
+    marginLeft: "40px",
   };
   return (
     <>

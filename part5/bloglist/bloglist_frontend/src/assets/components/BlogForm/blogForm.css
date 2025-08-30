@@ -1,3 +1,7 @@
+.formSection {
+    padding-left: 40px;
+}
+
 .formSection form {
     display: flex;
     flex-direction: column;

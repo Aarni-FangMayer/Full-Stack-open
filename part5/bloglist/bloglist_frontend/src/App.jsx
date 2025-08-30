@@ -144,7 +144,7 @@ const App = () => {
   const personalBlogs = () => {
     return (
       <>
-        <h2 style={{display: "inline-block"}}>Hi, {user.name} welcome to your personal blogs page!</h2>
+        <h2 style={{display: "inline-block", marginLeft: "40px"}}>Hi, {user.name} welcome to your personal blogs page!</h2>
         <button
         style={logoutButtonStyle}
           onClick={() => {

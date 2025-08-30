@@ -7,7 +7,7 @@
 }
 
 .blogInfo button {
-    width: 47%;
+    width: 100%;
     background-color: #97c6f1;
     padding: 5px;
     border-radius: 5px;
@@ -29,7 +29,7 @@
 }
 
 #deleteButton {
-    margin-left: 10px;
+    margin-top: 5px;
     background-color: #f28b82;
 }
 
