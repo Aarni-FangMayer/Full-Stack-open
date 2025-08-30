@@ -80,7 +80,6 @@ const App = () => {
   };
 
   const handleAddLike = (id) => {
-    const url = `http://localhost:3001/blogs/${id}`;
     const blog = blogs.find((blog) => blog.id === id);
     const updatedBlog = { ...blog, likes: blog.likes + 1 };
 
@@ -144,9 +143,9 @@ const App = () => {
   const personalBlogs = () => {
     return (
       <>
-        <h2 style={{display: "inline-block", marginLeft: "40px"}}>Hi, {user.name} welcome to your personal blogs page!</h2>
+        <h2 style={ { display: "inline-block", marginLeft: "40px" } }>Hi, {user.name} welcome to your personal blogs page!</h2>
         <button
-        style={logoutButtonStyle}
+          style={logoutButtonStyle}
           onClick={() => {
             window.localStorage.clear();
             setUser(null);

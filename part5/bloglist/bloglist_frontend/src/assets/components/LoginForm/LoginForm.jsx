@@ -1,15 +1,20 @@
-/* eslint-disable react/prop-types */
 import React from "react";
-import './loginForm.css'
+import "./loginForm.css";
 
-const LoginForm = ({ handleLogin, username, setUsername, password, setPassword }) => {
+const LoginForm = ({
+  handleLogin,
+  username,
+  setUsername,
+  password,
+  setPassword,
+}) => {
   return (
     <div className="formSection">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
           <label>
-            Username 
+            Username
             <input
               type="text"
               value={username}
@@ -19,7 +24,7 @@ const LoginForm = ({ handleLogin, username, setUsername, password, setPassword }
         </div>
         <div>
           <label>
-            Password 
+            Password
             <input
               type="password"
               value={password}

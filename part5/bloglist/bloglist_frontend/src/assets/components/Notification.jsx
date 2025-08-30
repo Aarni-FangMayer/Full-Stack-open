@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 
 const Notification = ({ message, type }) => {
@@ -40,8 +39,8 @@ const Notification = ({ message, type }) => {
     type === "error"
       ? errorStyle
       : type === "warning"
-      ? warningStyle
-      : successStyle;
+        ? warningStyle
+        : successStyle;
 
   return <div style={style}>{message}</div>;
 };
