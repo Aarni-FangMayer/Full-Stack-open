@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import BlogInfo from "./BlogInfo";
 import "./blogsList.css";
 
-const BlogsList = ({ blogs, addLike, deleteBlog }) => {
+const BlogsList = ({ blogs, addLike, deleteBlog, username }) => {
   const [sortByLikesCount, setSortByLikesCount] = useState(false);
 
   if (!blogs || blogs.length === 0) {
@@ -13,6 +13,7 @@ const BlogsList = ({ blogs, addLike, deleteBlog }) => {
 
   const sortFavoriteBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
   const sortDislikedBlogs = [...blogs].sort((a, b) => a.likes - b.likes);
+
 
   const favoriteBlogs = () => {
     return (
@@ -36,6 +37,7 @@ const BlogsList = ({ blogs, addLike, deleteBlog }) => {
                   likes={blog.likes}
                   addLike={addLike}
                   deleteBlog={deleteBlog}
+                  username={username}
                 />
               </li>
             );
@@ -67,6 +69,7 @@ const BlogsList = ({ blogs, addLike, deleteBlog }) => {
                   likes={blog.likes}
                   addLike={addLike}
                   deleteBlog={deleteBlog}
+                  username={username}
                 />
               </li>
             );
@@ -77,27 +80,6 @@ const BlogsList = ({ blogs, addLike, deleteBlog }) => {
   };
   return (
     <>{sortByLikesCount ? favoriteBlogs() : dislikedBlogs()}</>
-
-    // <div className="blogsList">
-    //   <ul>
-    //     {blogs.map((blog) => {
-    //       return (
-    //         <li key={blog.id}>
-    //           <BlogInfo
-    //             id={blog.id}
-    //             author={blog.author}
-    //             name={blog.name}
-    //             url={blog.url}
-    //             reviews={blog.reviews}
-    //             likes={blog.likes}
-    //             addLike={addLike}
-    //             deleteBlog={deleteBlog}
-    //           />
-    //         </li>
-    //       );
-    //     })}
-    //   </ul>
-    // </div>
   );
 };
 
