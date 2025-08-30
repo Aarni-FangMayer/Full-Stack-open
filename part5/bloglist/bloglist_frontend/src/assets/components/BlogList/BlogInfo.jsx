@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./blogInfo.css";
 
-const BlogInfo = ({ id, author, name, url, reviews, likes, addLike, deleteBlog }) => {
+const BlogInfo = ({ id, author, name, url, reviews, likes, addLike, deleteBlog, username }) => {
   const [showMoreInfo, setShowMoreInfo] = useState(false);
 
   const shortInfo = () => {
@@ -14,6 +14,12 @@ const BlogInfo = ({ id, author, name, url, reviews, likes, addLike, deleteBlog }
     )
   };
 
+  const deleteButton = () => {
+    return (
+      <button id="deleteButton" onClick={() => deleteBlog(id)}>Delete</button>
+    )
+  }
+
   const fullInfo = () => {
     return (
       <div className="blogInfo">
@@ -23,7 +29,7 @@ const BlogInfo = ({ id, author, name, url, reviews, likes, addLike, deleteBlog }
       <p>Reviews: {reviews}</p>
       <p>Likes: {likes}</p>
       <button onClick={() => addLike(id)}>Like</button>
-      <button id="deleteButton" onClick={() => deleteBlog(id)}>Delete</button>
+      {author === username ? deleteButton() : ""}
       <button id="hideInfoButton" onClick={()=> setShowMoreInfo(null)}>hide info</button>
     </div>
     )
